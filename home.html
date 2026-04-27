@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-lang-key="title-1"></title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <a href="index.html" class="home-button home-btn">
+      <img src="./assets/images/home-btn.png" alt="" />
+    </a>
+
+    <div class="curtain left-curtain">
+      <img src="./assets/images/left-curten.png" alt="" />
+    </div>
+    <div class="curtain right-curtain">
+      <img src="./assets/images/right-curten.png" alt="" />
+    </div>
+
+    <div class="page-title">
+      <span data-lang-key="title-1"></span>
+    </div>
+
+    <div class="language-container">
+      <div class="english active">E</div>
+      <div class="hindi">H</div>
+      <div class="gujrati">G</div>
+    </div>
+
+    <div class="custom-swiper-wrapper">
+      <div class="custom-nav custom-prev">
+        <img src="./assets/images/prev-btn.png" alt="" />
+      </div>
+
+      <div class="swiper roomSwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" data-caption-key="slide-1.1">
+            <div class="slide-card">
+              <div class="slide-image-box">
+                <video autoplay muted src="./assets/videos/1-1.mp4"></video>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide" data-caption-key="slide-1.2">
+            <div class="slide-card">
+              <div class="slide-image-box">
+                <video autoplay muted src="./assets/videos/1-2.mp4"></video>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide" data-caption-key="slide-1.3">
+            <div class="slide-card">
+              <div class="slide-image-box">
+                <video autoplay muted src="./assets/videos/1-3.mp4"></video>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide" data-caption-key="slide-1.4">
+            <div class="slide-card">
+              <div class="slide-image-box">
+                <video autoplay muted src="./assets/videos/1-4.mp4"></video>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide" data-caption-key="slide-1.5">
+            <div class="slide-card">
+              <div class="slide-image-box">
+                <video autoplay muted src="./assets/videos/1-5.mp4"></video>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide" data-caption-key="slide-1.6">
+            <div class="slide-card">
+              <div class="slide-image-box">
+                <video autoplay muted src="./assets/videos/1-6.mp4"></video>
+              </div>
+            </div>
+          </div>
+
+          <div class="swiper-slide" data-caption-key="slide-1.7">
+            <div class="slide-card">
+              <div class="slide-image-box">
+                <video autoplay muted src="./assets/videos/1-7.mp4"></video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="shared-caption">
+          <div id="sharedCaption"></div>
+        </div>
+      </div>
+
+      <div class="pages">
+        <a href="home.html" data-lang-key="num-1" class="page page-1">1</a>
+        <a href="general.html" data-lang-key="num-2" class="page page-1">2</a>
+        <a href="upashray.html" data-lang-key="num-3" class="page page-1">3</a>
+        <a href="pathshala.html" data-lang-key="num-4" class="page page-1">4</a>
+      </div>
+
+      <div class="custom-nav custom-next">
+        <img src="./assets/images/next-btn.png" alt="Next" />
+      </div>
+    </div>
+
+    <script src="./assets/js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+      const sharedCaption = document.getElementById("sharedCaption");
+
+      function getResponsiveSpace() {
+        const swiperEl = document.querySelector(".roomSwiper");
+        if (!swiperEl) return 700;
+
+        const baseDesignWidth = 1920;
+        const currentWidth = swiperEl.offsetWidth;
+
+        return (700 * currentWidth) / baseDesignWidth;
+      }
+
+      function getCurrentLanguage() {
+        return localStorage.getItem("selectedLanguage") || "English";
+      }
+
+      function updateSharedCaption(text) {
+        const captionBox = document.querySelector(".shared-caption");
+        const captionText = document.getElementById("sharedCaption");
+
+        if (!captionBox || !captionText) return;
+
+        const currentWidth = captionBox.offsetWidth || window.innerWidth * 0.2;
+
+        captionBox.style.width = currentWidth + "px";
+        captionText.textContent = text;
+
+        requestAnimationFrame(() => {
+          captionBox.style.width = "auto";
+
+          const naturalWidth = captionBox.scrollWidth;
+          const minWidth = window.innerWidth * 0.2;
+          const maxWidth = window.innerWidth * 0.4;
+
+          const finalWidth = Math.max(
+            minWidth,
+            Math.min(naturalWidth, maxWidth),
+          );
+
+          captionBox.style.width = finalWidth + "px";
+        });
+      }
+
+      function updateSwiperCaption(swiper) {
+        if (!sharedCaption) return;
+        if (typeof translations === "undefined") return;
+
+        const activeSlide = swiper.slides[swiper.activeIndex];
+        if (!activeSlide) return;
+
+        const captionKey = activeSlide.getAttribute("data-caption-key");
+        if (!captionKey) return;
+
+        const currentLang = getCurrentLanguage();
+        const langData = translations[currentLang] || {};
+        const fallbackData = translations["English"] || {};
+        const caption = langData[captionKey] || fallbackData[captionKey] || "";
+
+        if (sharedCaption.textContent === caption) return;
+
+        updateSharedCaption(caption);
+      }
+
+      function updateNavVisibility(swiper) {
+        const prevBtn = document.querySelector(".custom-prev");
+        const nextBtn = document.querySelector(".custom-next");
+
+        if (!prevBtn || !nextBtn) return;
+
+        if (swiper.isBeginning) {
+          prevBtn.style.visibility = "hidden";
+          prevBtn.style.pointerEvents = "none";
+        } else {
+          prevBtn.style.visibility = "visible";
+          prevBtn.style.pointerEvents = "auto";
+        }
+
+        if (swiper.isEnd) {
+          nextBtn.style.visibility = "hidden";
+          nextBtn.style.pointerEvents = "none";
+        } else {
+          nextBtn.style.visibility = "visible";
+          nextBtn.style.pointerEvents = "auto";
+        }
+      }
+
+      const totalSlides = document.querySelectorAll(
+        ".roomSwiper .swiper-slide",
+      ).length;
+
+      const roomSwiper = new Swiper(".roomSwiper", {
+        direction: "horizontal",
+        loop: false,
+        centeredSlides: true,
+        slidesPerView: 3,
+        slidesPerGroup: 1,
+        spaceBetween: getResponsiveSpace(),
+        speed: 800,
+        watchSlidesProgress: true,
+        navigation: {
+          nextEl: ".custom-next",
+          prevEl: ".custom-prev",
+        },
+        on: {
+          init: function () {
+            updateSwiperCaption(this);
+            updateNavVisibility(this);
+          },
+          slideChange: function () {
+            updateSwiperCaption(this);
+            updateNavVisibility(this);
+          },
+          reachBeginning: function () {
+            updateNavVisibility(this);
+          },
+          reachEnd: function () {
+            updateNavVisibility(this);
+          },
+          fromEdge: function () {
+            updateNavVisibility(this);
+          },
+        },
+      });
+
+      window.addEventListener("resize", () => {
+        roomSwiper.params.spaceBetween = getResponsiveSpace();
+        roomSwiper.update();
+        updateSwiperCaption(roomSwiper);
+        updateNavVisibility(roomSwiper);
+      });
+
+      if (typeof applyLanguage === "function") {
+        const originalApplyLanguage = applyLanguage;
+
+        applyLanguage = function (lang) {
+          originalApplyLanguage(lang);
+          updateSwiperCaption(roomSwiper);
+        };
+      }
+    </script>
+  </body>
+</html>

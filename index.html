@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-lang-key="title"></title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <div class="circle" id="introCircle">
+      <div data-lang-key="title"></div>
+      <button id="startBtn">Click</button>
+    </div>
+
+    <div class="main">
+      <div class="home-button home-btn">
+        <img src="./assets/images/home-btn.png" alt="" />
+      </div>
+      <div class="page-title">
+        <span data-lang-key="title"></span>
+      </div>
+      <!-- nav-container -->
+      <div class="language-container">
+        <div class="english active">E</div>
+        <div class="hindi">H</div>
+        <div class="gujrati">G</div>
+      </div>
+
+      <div class="topics">
+        <a href="home.html" class="topic topic-1">
+          <div class="num num-1" data-lang-key="num-1"></div>
+          <span data-lang-key="topic-1"></span>
+          <img src="./assets/images/topic-1.png" alt="" />
+        </a>
+
+        <a href="general.html" class="topic topic-2">
+          <div class="num num-2" data-lang-key="num-2"></div>
+          <span data-lang-key="topic-2"></span>
+          <img src="./assets/images/topic-2.png" alt="" />
+        </a>
+
+        <a href="upashray.html" class="topic topic-3">
+          <div class="num num-3" data-lang-key="num-3"></div>
+          <span data-lang-key="topic-3"></span>
+          <img src="./assets/images/topic-3.png" alt="" />
+        </a>
+
+        <a href="pathshala.html" class="topic topic-4">
+          <div class="num num-4" data-lang-key="num-4"></div>
+          <span data-lang-key="topic-4"></span>
+          <img src="./assets/images/topic-4.png" alt="" />
+        </a>
+      </div>
+    </div>
+    <script src="./assets/js/app.js"></script>
+
+    <script>
+      const introCircle = document.getElementById("introCircle");
+      const main = document.querySelector(".main");
+      const startBtn = document.getElementById("startBtn");
+      const homeBtn = document.querySelector(".home-btn");
+
+      function startIntro() {
+        introCircle.style.display = "flex";
+        introCircle.style.opacity = "1";
+        introCircle.style.pointerEvents = "auto";
+
+        introCircle.classList.remove("expand");
+        main.classList.remove("show");
+
+        void introCircle.offsetWidth;
+        void main.offsetWidth;
+
+        introCircle.classList.add("expand");
+
+        setTimeout(() => {
+          main.classList.add("show");
+        }, 250);
+
+        setTimeout(() => {
+          introCircle.style.display = "none";
+        }, 1300);
+      }
+
+      startBtn?.addEventListener("click", startIntro);
+
+      homeBtn?.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        main.classList.remove("show");
+        introCircle.style.display = "flex";
+        introCircle.style.opacity = "1";
+        introCircle.style.pointerEvents = "auto";
+        introCircle.classList.remove("expand");
+
+        void introCircle.offsetWidth;
+        void main.offsetWidth;
+      });
+    </script>
+  </body>
+</html>
