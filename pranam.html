@@ -10,31 +10,127 @@
     />
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
+
   <body>
     <div class="curtain left-curtain">
       <img src="./assets/images/left-curten.png" alt="" />
     </div>
+
     <div class="curtain right-curtain">
       <img src="./assets/images/right-curten.png" alt="" />
     </div>
+
     <a href="pathshala.html" class="back-btn">
       <i class="fa-solid fa-arrow-left"></i>
     </a>
+
     <div class="language-container">
       <div class="english active">E</div>
       <div class="hindi">H</div>
       <div class="gujrati">G</div>
     </div>
+
     <div class="pranam-container">
       <div class="pranam-img">
         <span data-lang-key="pranam"></span>
         <img src="./assets/images/pranam-img.png" alt="" />
       </div>
+
       <a href="index.html" class="home-btn-1">
         <span data-lang-key="home"></span>
         <img src="./assets/images/home-btn-1.png" alt="" />
       </a>
     </div>
+
     <script src="./assets/js/app.js"></script>
+
+    <script>
+      (() => {
+        const englishBtn = document.querySelector(".english");
+        const hindiBtn = document.querySelector(".hindi");
+        const gujratiBtn = document.querySelector(".gujrati");
+
+        const backBtn = document.querySelector(".back-btn");
+        const homeBtn = document.querySelector(".home-btn-1");
+
+        // Page load audio
+        const pageLoadAudio = new Audio("./assets/audio/pranam.mp3");
+
+        // Language audios
+        const englishAudio = new Audio("./assets/audio/Eng.mpeg");
+        const hindiAudio = new Audio("./assets/audio/Hin.mpeg");
+        const gujratiAudio = new Audio("./assets/audio/Guj.mpeg");
+
+        // Button audios
+        const backAudio = new Audio("./assets/audio/pop.mp3");
+        const homeAudio = new Audio("./assets/audio/topic_home-btn_back-btn/7.mp3");
+
+        pageLoadAudio.preload = "auto";
+        englishAudio.preload = "auto";
+        hindiAudio.preload = "auto";
+        gujratiAudio.preload = "auto";
+        backAudio.preload = "auto";
+        homeAudio.preload = "auto";
+
+        function playAudio(audio) {
+          if (!audio) return;
+
+          try {
+            audio.pause();
+            audio.currentTime = 0;
+
+            audio.play().catch((error) => {
+              console.log("Audio play blocked or failed:", error);
+            });
+          } catch (error) {
+            console.log("Audio play error:", error);
+          }
+        }
+
+        // Page load / refresh audio
+        window.addEventListener("load", () => {
+          playAudio(pageLoadAudio);
+        });
+
+        // Language button audios
+        englishBtn?.addEventListener("click", () => {
+          playAudio(englishAudio);
+        });
+
+        hindiBtn?.addEventListener("click", () => {
+          playAudio(hindiAudio);
+        });
+
+        gujratiBtn?.addEventListener("click", () => {
+          playAudio(gujratiAudio);
+        });
+
+        // Back button audio
+        backBtn?.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          const link = backBtn.getAttribute("href");
+
+          playAudio(backAudio);
+
+          setTimeout(() => {
+            window.location.href = link;
+          }, 500);
+        });
+
+        // Home button audio
+        homeBtn?.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          const link = homeBtn.getAttribute("href");
+
+          playAudio(homeAudio);
+
+          setTimeout(() => {
+            window.location.href = link;
+          }, 500);
+        });
+      })();
+    </script>
   </body>
 </html>

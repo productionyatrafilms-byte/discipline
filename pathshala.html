@@ -10,6 +10,7 @@
     />
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
+
   <body>
     <a href="index.html" class="home-button home-btn">
       <img src="./assets/images/home-btn.png" alt="" />
@@ -18,6 +19,7 @@
     <div class="curtain left-curtain">
       <img src="./assets/images/left-curten.png" alt="" />
     </div>
+
     <div class="curtain right-curtain">
       <img src="./assets/images/right-curten.png" alt="" />
     </div>
@@ -42,7 +44,13 @@
           <div class="swiper-slide" data-caption-key="slide-4.1">
             <div class="slide-card">
               <div class="slide-image-box">
-                <video autoplay muted src="./assets/videos/4-1.mp4"></video>
+                <video
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  src="./assets/videos/4-1.mp4"
+                ></video>
               </div>
             </div>
           </div>
@@ -50,7 +58,13 @@
           <div class="swiper-slide" data-caption-key="slide-4.2">
             <div class="slide-card">
               <div class="slide-image-box">
-                <video autoplay muted src="./assets/videos/4-2.mp4"></video>
+                <video
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  src="./assets/videos/4-2.mp4"
+                ></video>
               </div>
             </div>
           </div>
@@ -58,7 +72,13 @@
           <div class="swiper-slide" data-caption-key="slide-4.3">
             <div class="slide-card">
               <div class="slide-image-box">
-                <video autoplay muted src="./assets/videos/4-3.mp4"></video>
+                <video
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  src="./assets/videos/4-3.mp4"
+                ></video>
               </div>
             </div>
           </div>
@@ -66,7 +86,13 @@
           <div class="swiper-slide" data-caption-key="slide-4.4">
             <div class="slide-card">
               <div class="slide-image-box">
-                <video autoplay muted src="./assets/videos/4-4.mp4"></video>
+                <video
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  src="./assets/videos/4-4.mp4"
+                ></video>
               </div>
             </div>
           </div>
@@ -74,7 +100,13 @@
           <div class="swiper-slide" data-caption-key="slide-4.5">
             <div class="slide-card">
               <div class="slide-image-box">
-                <video autoplay muted src="./assets/videos/4-5.mp4"></video>
+                <video
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  src="./assets/videos/4-5.mp4"
+                ></video>
               </div>
             </div>
           </div>
@@ -82,7 +114,13 @@
           <div class="swiper-slide" data-caption-key="slide-4.6">
             <div class="slide-card">
               <div class="slide-image-box">
-                <video autoplay muted src="./assets/videos/4-6.mp4"></video>
+                <video
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  src="./assets/videos/4-6.mp4"
+                ></video>
               </div>
             </div>
           </div>
@@ -105,147 +143,275 @@
       </div>
     </div>
 
+    <a href="pranam.html" class="pranam-link" style="visibility: hidden; opacity: 0; pointer-events: none;">
+      <img src="./assets/images/arowAsset.png" alt="" />
+      <span data-lang-key="pranam"></span>
+    </a>
+
     <script src="./assets/js/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
-  const sharedCaption = document.getElementById("sharedCaption");
-  const nextBtn = document.querySelector(".custom-next");
-  const prevBtn = document.querySelector(".custom-prev");
+      (() => {
+        const sharedCaption = document.getElementById("sharedCaption");
 
-  function getResponsiveSpace() {
-    const swiperEl = document.querySelector(".roomSwiper");
-    if (!swiperEl) return 700;
+        const homeBtn = document.querySelector(".home-btn");
+        const englishBtn = document.querySelector(".english");
+        const hindiBtn = document.querySelector(".hindi");
+        const gujratiBtn = document.querySelector(".gujrati");
 
-    const baseDesignWidth = 1920;
-    const currentWidth = swiperEl.offsetWidth;
+        const nextBtn = document.querySelector(".custom-next");
+        const prevBtn = document.querySelector(".custom-prev");
+        const pranamLink = document.querySelector(".pranam-link");
 
-    return (700 * currentWidth) / baseDesignWidth;
-  }
+        const pageLinks = document.querySelectorAll(".pages .page");
 
-  function getCurrentLanguage() {
-    return localStorage.getItem("selectedLanguage") || "English";
-  }
+        const curtainAudio = new Audio("./assets/audio/swipe/curtain.mp3");
 
-  function updateSharedCaption(text) {
-    const captionBox = document.querySelector(".shared-caption");
-    const captionText = document.getElementById("sharedCaption");
+        const englishAudio = new Audio("./assets/audio/Eng.mpeg");
+        const hindiAudio = new Audio("./assets/audio/Hin.mpeg");
+        const gujratiAudio = new Audio("./assets/audio/Guj.mpeg");
 
-    if (!captionBox || !captionText) return;
+        const homeAudio = new Audio("./assets/audio/pop.mp3");
+        const topicAudio = new Audio("./assets/audio/topic_home-btn_back-btn/7.mp3");
+        const navAudio = new Audio("./assets/audio/swipe/4.mp3");
 
-    const currentWidth = captionBox.offsetWidth || window.innerWidth * 0.2;
+        curtainAudio.preload = "auto";
+        englishAudio.preload = "auto";
+        hindiAudio.preload = "auto";
+        gujratiAudio.preload = "auto";
+        homeAudio.preload = "auto";
+        topicAudio.preload = "auto";
+        navAudio.preload = "auto";
 
-    captionBox.style.width = currentWidth + "px";
-    captionText.textContent = text;
+        function playAudio(audio) {
+          if (!audio) return;
 
-    requestAnimationFrame(() => {
-      captionBox.style.width = "auto";
+          try {
+            audio.pause();
+            audio.currentTime = 0;
 
-      const naturalWidth = captionBox.scrollWidth;
-      const minWidth = window.innerWidth * 0.2;
-      const maxWidth = window.innerWidth * 0.4;
+            audio.play().catch((error) => {
+              console.log("Audio play blocked or failed:", error);
+            });
+          } catch (error) {
+            console.log("Audio play error:", error);
+          }
+        }
 
-      const finalWidth = Math.max(
-        minWidth,
-        Math.min(naturalWidth, maxWidth)
-      );
+        window.addEventListener("load", () => {
+          playAudio(curtainAudio);
+        });
 
-      captionBox.style.width = finalWidth + "px";
-    });
-  }
+        englishBtn?.addEventListener("click", () => {
+          playAudio(englishAudio);
+        });
 
-  function updateSwiperCaption(swiper) {
-    if (!sharedCaption) return;
-    if (typeof translations === "undefined") return;
+        hindiBtn?.addEventListener("click", () => {
+          playAudio(hindiAudio);
+        });
 
-    const activeSlide = swiper.slides[swiper.activeIndex];
-    if (!activeSlide) return;
+        gujratiBtn?.addEventListener("click", () => {
+          playAudio(gujratiAudio);
+        });
 
-    const captionKey = activeSlide.getAttribute("data-caption-key");
-    if (!captionKey) return;
+        homeBtn?.addEventListener("click", (e) => {
+          e.preventDefault();
 
-    const currentLang = getCurrentLanguage();
-    const langData = translations[currentLang] || {};
-    const fallbackData = translations["English"] || {};
-    const caption = langData[captionKey] || fallbackData[captionKey] || "";
+          const link = homeBtn.getAttribute("href");
 
-    if (sharedCaption.textContent === caption) return;
+          playAudio(homeAudio);
 
-    updateSharedCaption(caption);
-  }
+          setTimeout(() => {
+            window.location.href = link;
+          }, 500);
+        });
 
-  function updateNavVisibility(swiper) {
-    if (!prevBtn || !nextBtn) return;
+        pageLinks.forEach((page) => {
+          page.addEventListener("click", function (e) {
+            e.preventDefault();
 
-    if (swiper.isBeginning) {
-      prevBtn.style.visibility = "hidden";
-      prevBtn.style.pointerEvents = "none";
-      prevBtn.style.opacity = "0";
-    } else {
-      prevBtn.style.visibility = "visible";
-      prevBtn.style.pointerEvents = "auto";
-      prevBtn.style.opacity = "1";
-    }
+            const link = this.getAttribute("href");
 
-    if (swiper.isEnd) {
-      nextBtn.style.visibility = "visible";
-      nextBtn.style.pointerEvents = "auto";
-      nextBtn.style.opacity = "1";
-    } else {
-      nextBtn.style.visibility = "visible";
-      nextBtn.style.pointerEvents = "auto";
-      nextBtn.style.opacity = "1";
-    }
-  }
+            playAudio(topicAudio);
 
-  const roomSwiper = new Swiper(".roomSwiper", {
-    direction: "horizontal",
-    loop: false,
-    centeredSlides: true,
-    slidesPerView: 3,
-    slidesPerGroup: 1,
-    spaceBetween: getResponsiveSpace(),
-    speed: 800,
-    watchSlidesProgress: true,
-    navigation: {
-      nextEl: ".custom-next",
-      prevEl: ".custom-prev",
-    },
-    on: {
-      init: function () {
-        updateSwiperCaption(this);
-        updateNavVisibility(this);
-      },
-      slideChange: function () {
-        updateSwiperCaption(this);
-        updateNavVisibility(this);
-      },
-    },
-  });
+            setTimeout(() => {
+              window.location.href = link;
+            }, 500);
+          });
+        });
 
-  if (nextBtn) {
-    nextBtn.addEventListener("click", function (e) {
-      if (roomSwiper.isEnd) {
-        e.preventDefault();
-        window.location.href = "pranam.html";
-      }
-    });
-  }
+        function getResponsiveSpace() {
+          const swiperEl = document.querySelector(".roomSwiper");
+          if (!swiperEl) return 700;
 
-  window.addEventListener("resize", () => {
-    roomSwiper.params.spaceBetween = getResponsiveSpace();
-    roomSwiper.update();
-    updateSwiperCaption(roomSwiper);
-    updateNavVisibility(roomSwiper);
-  });
+          const baseDesignWidth = 1920;
+          const currentWidth = swiperEl.offsetWidth;
 
-  if (typeof applyLanguage === "function") {
-    const originalApplyLanguage = applyLanguage;
+          return (700 * currentWidth) / baseDesignWidth;
+        }
 
-    applyLanguage = function (lang) {
-      originalApplyLanguage(lang);
-      updateSwiperCaption(roomSwiper);
-    };
-  }
-</script>
+        function getCurrentLanguage() {
+          return localStorage.getItem("selectedLanguage") || "English";
+        }
+
+        function updateSharedCaption(text) {
+          const captionBox = document.querySelector(".shared-caption");
+          const captionText = document.getElementById("sharedCaption");
+
+          if (!captionBox || !captionText) return;
+
+          const currentWidth = captionBox.offsetWidth || window.innerWidth * 0.2;
+
+          captionBox.style.width = currentWidth + "px";
+          captionText.textContent = text;
+
+          requestAnimationFrame(() => {
+            captionBox.style.width = "auto";
+
+            const naturalWidth = captionBox.scrollWidth;
+            const minWidth = window.innerWidth * 0.2;
+            const maxWidth = window.innerWidth * 0.4;
+
+            const finalWidth = Math.max(
+              minWidth,
+              Math.min(naturalWidth, maxWidth)
+            );
+
+            captionBox.style.width = finalWidth + "px";
+          });
+        }
+
+        function updateSwiperCaption(swiper) {
+          if (!sharedCaption) return;
+          if (typeof translations === "undefined") return;
+
+          const activeSlide = swiper.slides[swiper.activeIndex];
+          if (!activeSlide) return;
+
+          const captionKey = activeSlide.getAttribute("data-caption-key");
+          if (!captionKey) return;
+
+          const currentLang = getCurrentLanguage();
+          const langData = translations[currentLang] || {};
+          const fallbackData = translations["English"] || {};
+          const caption = langData[captionKey] || fallbackData[captionKey] || "";
+
+          if (sharedCaption.textContent === caption) return;
+
+          updateSharedCaption(caption);
+        }
+
+        function updateNavVisibility(swiper) {
+          if (!prevBtn || !nextBtn || !pranamLink) return;
+
+          if (swiper.isBeginning) {
+            prevBtn.style.visibility = "hidden";
+            prevBtn.style.pointerEvents = "none";
+            prevBtn.style.opacity = "0";
+          } else {
+            prevBtn.style.visibility = "visible";
+            prevBtn.style.pointerEvents = "auto";
+            prevBtn.style.opacity = "1";
+          }
+
+          if (swiper.isEnd) {
+            nextBtn.style.visibility = "hidden";
+            nextBtn.style.pointerEvents = "none";
+            nextBtn.style.opacity = "0";
+
+            pranamLink.style.visibility = "visible";
+            pranamLink.style.pointerEvents = "auto";
+            pranamLink.style.opacity = "1";
+          } else {
+            nextBtn.style.visibility = "visible";
+            nextBtn.style.pointerEvents = "auto";
+            nextBtn.style.opacity = "1";
+
+            pranamLink.style.visibility = "hidden";
+            pranamLink.style.pointerEvents = "none";
+            pranamLink.style.opacity = "0";
+          }
+        }
+
+        const roomSwiper = new Swiper(".roomSwiper", {
+          direction: "horizontal",
+          loop: false,
+          centeredSlides: true,
+          slidesPerView: 3,
+          slidesPerGroup: 1,
+          spaceBetween: getResponsiveSpace(),
+          speed: 800,
+          watchSlidesProgress: true,
+          navigation: {
+            nextEl: ".custom-next",
+            prevEl: ".custom-prev",
+          },
+          on: {
+            init: function () {
+              updateSwiperCaption(this);
+              updateNavVisibility(this);
+            },
+            slideChange: function () {
+              updateSwiperCaption(this);
+              updateNavVisibility(this);
+            },
+            reachBeginning: function () {
+              updateNavVisibility(this);
+            },
+            reachEnd: function () {
+              updateNavVisibility(this);
+            },
+            fromEdge: function () {
+              updateNavVisibility(this);
+            },
+          },
+        });
+
+        prevBtn?.addEventListener(
+          "click",
+          () => {
+            playAudio(navAudio);
+          },
+          true
+        );
+
+        nextBtn?.addEventListener(
+          "click",
+          () => {
+            playAudio(navAudio);
+          },
+          true
+        );
+
+        pranamLink?.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          const link = pranamLink.getAttribute("href");
+
+          playAudio(navAudio);
+
+          setTimeout(() => {
+            window.location.href = link;
+          }, 500);
+        });
+
+        window.addEventListener("resize", () => {
+          roomSwiper.params.spaceBetween = getResponsiveSpace();
+          roomSwiper.update();
+          updateSwiperCaption(roomSwiper);
+          updateNavVisibility(roomSwiper);
+        });
+
+        if (typeof window.applyLanguage === "function") {
+          const originalApplyLanguage = window.applyLanguage;
+
+          window.applyLanguage = function (lang) {
+            originalApplyLanguage(lang);
+            updateSwiperCaption(roomSwiper);
+          };
+        }
+      })();
+    </script>
+  </body>
 </html>

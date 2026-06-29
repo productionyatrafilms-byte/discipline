@@ -6,19 +6,23 @@
     <title data-lang-key="title"></title>
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
+
   <body>
     <div class="circle" id="introCircle">
-      <div data-lang-key="title"></div>
-      <button id="startBtn">Click</button>
+      <div class="title-main" data-lang-key="title"></div>
+      <div class="description" data-lang-key="desc"></div>
+      <button id="startBtn" class="startBtn-1" data-lang-key="click"></button>
     </div>
 
     <div class="main">
       <div class="home-button home-btn">
         <img src="./assets/images/home-btn.png" alt="" />
       </div>
+
       <div class="page-title">
         <span data-lang-key="title"></span>
       </div>
+
       <!-- nav-container -->
       <div class="language-container">
         <div class="english active">E</div>
@@ -52,50 +56,146 @@
         </a>
       </div>
     </div>
+
     <script src="./assets/js/app.js"></script>
 
     <script>
-      const introCircle = document.getElementById("introCircle");
-      const main = document.querySelector(".main");
-      const startBtn = document.getElementById("startBtn");
-      const homeBtn = document.querySelector(".home-btn");
+    const introCircle = document.getElementById("introCircle");
+const main = document.querySelector(".main");
+const startBtn = document.getElementById("startBtn");
+const homeBtn = document.querySelector(".home-btn");
+const description = document.querySelector(".description");
 
-      function startIntro() {
-        introCircle.style.display = "flex";
-        introCircle.style.opacity = "1";
-        introCircle.style.pointerEvents = "auto";
+const englishBtn = document.querySelector(".english");
+const hindiBtn = document.querySelector(".hindi");
+const gujratiBtn = document.querySelector(".gujrati");
 
-        introCircle.classList.remove("expand");
-        main.classList.remove("show");
+const transitionAudio = new Audio("./assets/audio/transition/2.mp3");
 
-        void introCircle.offsetWidth;
-        void main.offsetWidth;
+const englishAudio = new Audio("./assets/audio/Eng.mpeg");
+const hindiAudio = new Audio("./assets/audio/Hin.mpeg");
+const gujratiAudio = new Audio("./assets/audio/Guj.mpeg");
 
-        introCircle.classList.add("expand");
+const homeAudio = new Audio("./assets/audio/pop.mp3");
 
-        setTimeout(() => {
-          main.classList.add("show");
-        }, 250);
+// Topic click audio
+const topicAudio = new Audio("./assets/audio/topic_home-btn_back-btn/7.mp3");
 
-        setTimeout(() => {
-          introCircle.style.display = "none";
-        }, 1300);
+const allAudios = [
+  transitionAudio,
+  englishAudio,
+  hindiAudio,
+  gujratiAudio,
+  homeAudio,
+  topicAudio,
+];
+
+allAudios.forEach((audio) => {
+  audio.preload = "auto";
+});
+
+function playAudio(audio) {
+  if (!audio) return;
+
+  try {
+    allAudios.forEach((item) => {
+      if (item !== audio) {
+        item.pause();
+        item.currentTime = 0;
       }
+    });
 
-      startBtn?.addEventListener("click", startIntro);
+    audio.pause();
+    audio.currentTime = 0;
 
-      homeBtn?.addEventListener("click", (e) => {
-        e.preventDefault();
+    audio.play().catch((error) => {
+      console.log("Audio play blocked or failed:", error);
+    });
+  } catch (error) {
+    console.log("Audio play error:", error);
+  }
+}
 
-        main.classList.remove("show");
-        introCircle.style.display = "flex";
-        introCircle.style.opacity = "1";
-        introCircle.style.pointerEvents = "auto";
-        introCircle.classList.remove("expand");
+function startIntro() {
+  introCircle.style.display = "flex";
+  introCircle.style.opacity = "1";
+  introCircle.style.pointerEvents = "auto";
 
-        void introCircle.offsetWidth;
-        void main.offsetWidth;
-      });
+  introCircle.classList.remove("expand");
+  main.classList.remove("show");
+
+  void introCircle.offsetWidth;
+  void main.offsetWidth;
+
+  introCircle.classList.add("expand");
+
+  setTimeout(() => {
+    main.classList.add("show");
+  }, 250);
+
+  setTimeout(() => {
+    introCircle.style.display = "none";
+  }, 1300);
+}
+
+// Start button click
+startBtn?.addEventListener("click", () => {
+  if (description) {
+    description.style.display = "none";
+  }
+
+  playAudio(transitionAudio);
+  startIntro();
+});
+
+// Language button audio
+englishBtn?.addEventListener("click", () => {
+  playAudio(englishAudio);
+});
+
+hindiBtn?.addEventListener("click", () => {
+  playAudio(hindiAudio);
+});
+
+gujratiBtn?.addEventListener("click", () => {
+  playAudio(gujratiAudio);
+});
+
+// Home button click
+homeBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  playAudio(homeAudio);
+
+  main.classList.remove("show");
+
+  if (description) {
+    description.style.display = "block";
+  }
+
+  introCircle.style.display = "flex";
+  introCircle.style.opacity = "1";
+  introCircle.style.pointerEvents = "auto";
+  introCircle.classList.remove("expand");
+
+  void introCircle.offsetWidth;
+  void main.offsetWidth;
+});
+
+// Topic click audio + page redirect
+document.querySelectorAll(".topic").forEach((topic) => {
+  topic.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const link = this.getAttribute("href");
+
+    playAudio(topicAudio);
+
+    setTimeout(() => {
+      window.location.href = link;
+    }, 700);
+  });
+});
     </script>
   </body>
 </html>
