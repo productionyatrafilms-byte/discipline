@@ -76,16 +76,29 @@ body[data-lang="gu"] {
   font-weight: 700;
 }
 
-body[data-lang="hi"] .page-title span, .title-main {
+body[data-lang="hi"] .page-title span {
     -webkit-text-stroke: 0!important;
     text-stroke: 0;
 }
 
 /* Remove stroke for Gujarati */
-body[data-lang="gu"] .page-title span, .title-main {
+body[data-lang="gu"] .page-title span{
     -webkit-text-stroke: 0!important;
     text-stroke: 0;
 }
+
+body[data-lang="hi"] .title-main {
+    -webkit-text-stroke: 0!important;
+    text-stroke: 0;
+}
+
+/* Remove stroke for Gujarati */
+body[data-lang="gu"] .title-main{
+    -webkit-text-stroke: 0!important;
+    text-stroke: 0;
+}
+
+
 
   body.page-ready {
     opacity: 1;
@@ -716,13 +729,7 @@ body[data-lang="gu"] .page-title span {
     color: #802922;
   }
 
-    body[data-lang="gu"] .title-main , .startBtn-1, .description{
-    font-weight: bolder!important;
-  }
 
-  body[data-lang="hi"] .title-main{
-    font-weight: bolder!important;
-  }
 
    body[data-lang="gu"] .topic .num{
     font-weight: bolder!important;
