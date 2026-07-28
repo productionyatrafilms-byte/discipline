@@ -154,23 +154,25 @@ body[data-lang="gu"] .page-title span {
     -webkit-text-stroke: 0.2vw white;
 }
 
-  .language-container {
-    position: fixed;
-    top: 2.5vw;
-    right: 5%;
-    display: flex;
-    width: 9vw;
-    padding: 0.2vw 0.3vw;
-    height: auto;
-    justify-content: space-between;
-    align-items: center;
-    font-family: "BalooRegular";
-    border: 0.3vw solid white;
-    background-color: transparent;
-    border-radius: 50vw;
-    pointer-events: auto;
-    z-index: 1000;
-  }
+.language-container {
+  position: fixed;
+  top: 2.5vw;
+  right: 5%;
+  display: flex;
+  width: 9vw;
+  padding: 0.2vw 0.3vw;
+  height: auto;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "BalooRegular";
+  border: 0.3vw solid white;
+  background-color: transparent;
+  border-radius: 50vw;
+  pointer-events: auto;
+
+  /* Higher than the intro circle */
+  z-index: 100000;
+}
 
   .language-container div {
     width: 2.5vw;
@@ -498,8 +500,8 @@ body[data-lang="gu"] .page-title span {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 6vw;
-    height: 4.5vw;
+    width: 4vw;
+    height: 4vw;
     z-index: 20;
     cursor: pointer;
     display: flex;

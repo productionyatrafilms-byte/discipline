@@ -11,7 +11,18 @@
     <div class="circle" id="introCircle">
       <div class="title-main" data-lang-key="title"></div>
       <div class="description" data-lang-key="desc"></div>
-      <button id="startBtn" class="startBtn-1" data-lang-key="click"></button>
+      <button
+        id="startBtn"
+        class="startBtn-1"
+        data-lang-key="click"
+      ></button>
+    </div>
+
+    <!-- Kept outside .main so it is visible initially -->
+    <div class="language-container">
+      <div class="english active">E</div>
+      <div class="hindi">H</div>
+      <div class="gujrati">G</div>
     </div>
 
     <div class="main">
@@ -23,20 +34,12 @@
         <span data-lang-key="title"></span>
       </div>
 
-      <!-- nav-container -->
-      <div class="language-container">
-        <div class="english active">E</div>
-        <div class="hindi">H</div>
-        <div class="gujrati">G</div>
-      </div>
-
       <div class="topics">
         <a href="home.html" class="topic topic-1">
           <div class="num num-1" data-lang-key="num-1"></div>
           <span data-lang-key="topic-1"></span>
           <img src="./assets/images/topic-1.png" alt="" />
         </a>
-
 
         <a href="upashray.html" class="topic topic-3">
           <div class="num num-2" data-lang-key="num-2"></div>
@@ -55,142 +58,141 @@
     <script src="./assets/js/app.js"></script>
 
     <script>
-    const introCircle = document.getElementById("introCircle");
-const main = document.querySelector(".main");
-const startBtn = document.getElementById("startBtn");
-const homeBtn = document.querySelector(".home-btn");
-const description = document.querySelector(".description");
+      const introCircle = document.getElementById("introCircle");
+      const main = document.querySelector(".main");
+      const startBtn = document.getElementById("startBtn");
+      const homeBtn = document.querySelector(".home-btn");
+      const description = document.querySelector(".description");
 
-const englishBtn = document.querySelector(".english");
-const hindiBtn = document.querySelector(".hindi");
-const gujratiBtn = document.querySelector(".gujrati");
+      const englishBtn = document.querySelector(".english");
+      const hindiBtn = document.querySelector(".hindi");
+      const gujratiBtn = document.querySelector(".gujrati");
 
-const transitionAudio = new Audio("./assets/audio/transition/2.mp3");
+      const transitionAudio = new Audio(
+        "./assets/audio/transition/2.mp3",
+      );
 
-const englishAudio = new Audio("./assets/audio/Eng.mpeg");
-const hindiAudio = new Audio("./assets/audio/Hin.mpeg");
-const gujratiAudio = new Audio("./assets/audio/Guj.mpeg");
+      const englishAudio = new Audio("./assets/audio/Eng.mpeg");
+      const hindiAudio = new Audio("./assets/audio/Hin.mpeg");
+      const gujratiAudio = new Audio("./assets/audio/Guj.mpeg");
 
-const homeAudio = new Audio("./assets/audio/pop.mp3");
+      const homeAudio = new Audio("./assets/audio/pop.mp3");
 
-// Topic click audio
-const topicAudio = new Audio("./assets/audio/topic_home-btn_back-btn/7.mp3");
+      const topicAudio = new Audio(
+        "./assets/audio/topic_home-btn_back-btn/7.mp3",
+      );
 
-const allAudios = [
-  transitionAudio,
-  englishAudio,
-  hindiAudio,
-  gujratiAudio,
-  homeAudio,
-  topicAudio,
-];
+      const allAudios = [
+        transitionAudio,
+        englishAudio,
+        hindiAudio,
+        gujratiAudio,
+        homeAudio,
+        topicAudio,
+      ];
 
-allAudios.forEach((audio) => {
-  audio.preload = "auto";
-});
+      allAudios.forEach((audio) => {
+        audio.preload = "auto";
+      });
 
-function playAudio(audio) {
-  if (!audio) return;
+      function playAudio(audio) {
+        if (!audio) return;
 
-  try {
-    allAudios.forEach((item) => {
-      if (item !== audio) {
-        item.pause();
-        item.currentTime = 0;
+        try {
+          allAudios.forEach((item) => {
+            if (item !== audio) {
+              item.pause();
+              item.currentTime = 0;
+            }
+          });
+
+          audio.pause();
+          audio.currentTime = 0;
+
+          audio.play().catch((error) => {
+            console.log("Audio play blocked or failed:", error);
+          });
+        } catch (error) {
+          console.log("Audio play error:", error);
+        }
       }
-    });
 
-    audio.pause();
-    audio.currentTime = 0;
+      function startIntro() {
+        introCircle.style.display = "flex";
+        introCircle.style.opacity = "1";
+        introCircle.style.pointerEvents = "auto";
 
-    audio.play().catch((error) => {
-      console.log("Audio play blocked or failed:", error);
-    });
-  } catch (error) {
-    console.log("Audio play error:", error);
-  }
-}
+        introCircle.classList.remove("expand");
+        main.classList.remove("show");
 
-function startIntro() {
-  introCircle.style.display = "flex";
-  introCircle.style.opacity = "1";
-  introCircle.style.pointerEvents = "auto";
+        void introCircle.offsetWidth;
+        void main.offsetWidth;
 
-  introCircle.classList.remove("expand");
-  main.classList.remove("show");
+        introCircle.classList.add("expand");
 
-  void introCircle.offsetWidth;
-  void main.offsetWidth;
+        setTimeout(() => {
+          main.classList.add("show");
+        }, 250);
 
-  introCircle.classList.add("expand");
+        setTimeout(() => {
+          introCircle.style.display = "none";
+        }, 1300);
+      }
 
-  setTimeout(() => {
-    main.classList.add("show");
-  }, 250);
+      startBtn?.addEventListener("click", () => {
+        if (description) {
+          description.style.display = "none";
+        }
 
-  setTimeout(() => {
-    introCircle.style.display = "none";
-  }, 1300);
-}
+        playAudio(transitionAudio);
+        startIntro();
+      });
 
-// Start button click
-startBtn?.addEventListener("click", () => {
-  if (description) {
-    description.style.display = "none";
-  }
+      englishBtn?.addEventListener("click", () => {
+        playAudio(englishAudio);
+      });
 
-  playAudio(transitionAudio);
-  startIntro();
-});
+      hindiBtn?.addEventListener("click", () => {
+        playAudio(hindiAudio);
+      });
 
-// Language button audio
-englishBtn?.addEventListener("click", () => {
-  playAudio(englishAudio);
-});
+      gujratiBtn?.addEventListener("click", () => {
+        playAudio(gujratiAudio);
+      });
 
-hindiBtn?.addEventListener("click", () => {
-  playAudio(hindiAudio);
-});
+      homeBtn?.addEventListener("click", (event) => {
+        event.preventDefault();
 
-gujratiBtn?.addEventListener("click", () => {
-  playAudio(gujratiAudio);
-});
+        playAudio(homeAudio);
 
-// Home button click
-homeBtn?.addEventListener("click", (e) => {
-  e.preventDefault();
+        main.classList.remove("show");
 
-  playAudio(homeAudio);
+        if (description) {
+          description.style.display = "block";
+        }
 
-  main.classList.remove("show");
+        introCircle.style.display = "flex";
+        introCircle.style.opacity = "1";
+        introCircle.style.pointerEvents = "auto";
+        introCircle.classList.remove("expand");
 
-  if (description) {
-    description.style.display = "block";
-  }
+        void introCircle.offsetWidth;
+        void main.offsetWidth;
+      });
 
-  introCircle.style.display = "flex";
-  introCircle.style.opacity = "1";
-  introCircle.style.pointerEvents = "auto";
-  introCircle.classList.remove("expand");
+      document.querySelectorAll(".topic").forEach((topic) => {
+        topic.addEventListener("click", function (event) {
+          event.preventDefault();
 
-  void introCircle.offsetWidth;
-  void main.offsetWidth;
-});
+          const link = this.getAttribute("href");
 
-// Topic click audio + page redirect
-document.querySelectorAll(".topic").forEach((topic) => {
-  topic.addEventListener("click", function (e) {
-    e.preventDefault();
+          playAudio(topicAudio);
 
-    const link = this.getAttribute("href");
-
-    playAudio(topicAudio);
-
-    setTimeout(() => {
-      window.location.href = link;
-    }, 700);
-  });
-});
+          setTimeout(() => {
+            window.location.href = link;
+          }, 700);
+        });
+      });
     </script>
   </body>
 </html>
