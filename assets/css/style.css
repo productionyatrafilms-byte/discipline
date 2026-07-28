@@ -64,6 +64,7 @@
     overflow-x: hidden;
     opacity: 1;
     transition: opacity 0.5s ease;
+
   }
 
 body[data-lang="hi"] {
@@ -494,6 +495,8 @@ body[data-lang="gu"] .page-title span {
     left: 50%;
     transform: translateX(-50%);
     box-sizing: border-box;
+        unicode-bidi: plaintext;
+    direction: ltr;
   }
 
   .custom-nav {
