@@ -44,7 +44,7 @@
           <div class="swiper-slide" data-caption-key="slide-1.1">
             <div class="slide-card">
               <div class="slide-image-box">
-                <video autoplay muted loop playsinline src="./assets/videos/1-1.mp4"></video>
+                <video muted loop playsinline src="./assets/videos/1-1.mp4"></video>
               </div>
             </div>
           </div>
@@ -52,7 +52,7 @@
           <div class="swiper-slide" data-caption-key="slide-1.2">
             <div class="slide-card">
               <div class="slide-image-box">
-                <video autoplay muted loop playsinline src="./assets/videos/1-2.mp4"></video>
+                <video muted loop playsinline src="./assets/videos/1-2.mp4"></video>
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@
           <div class="swiper-slide" data-caption-key="slide-1.3">
             <div class="slide-card">
               <div class="slide-image-box">
-                <video autoplay muted loop playsinline src="./assets/videos/1-3.mp4"></video>
+                <video muted loop playsinline src="./assets/videos/1-3.mp4"></video>
               </div>
             </div>
           </div>
@@ -68,7 +68,7 @@
           <div class="swiper-slide" data-caption-key="slide-1.4">
             <div class="slide-card">
               <div class="slide-image-box">
-                <video autoplay muted loop playsinline src="./assets/videos/1-4.mp4"></video>
+                <video muted loop playsinline src="./assets/videos/1-4.mp4"></video>
               </div>
             </div>
           </div>
@@ -76,7 +76,7 @@
           <div class="swiper-slide" data-caption-key="slide-1.5">
             <div class="slide-card">
               <div class="slide-image-box">
-                <video autoplay muted loop playsinline src="./assets/videos/1-5.mp4"></video>
+                <video muted loop playsinline src="./assets/videos/1-5.mp4"></video>
               </div>
             </div>
           </div>
@@ -84,7 +84,7 @@
           <div class="swiper-slide" data-caption-key="slide-1.6">
             <div class="slide-card">
               <div class="slide-image-box">
-                <video autoplay muted loop playsinline src="./assets/videos/1-6.mp4"></video>
+                <video muted loop playsinline src="./assets/videos/1-6.mp4"></video>
               </div>
             </div>
           </div>
@@ -92,7 +92,7 @@
           <div class="swiper-slide" data-caption-key="slide-1.7">
             <div class="slide-card">
               <div class="slide-image-box">
-                <video autoplay muted loop playsinline src="./assets/videos/1-7.mp4"></video>
+                <video muted loop playsinline src="./assets/videos/1-7.mp4"></video>
               </div>
             </div>
           </div>
@@ -296,6 +296,35 @@
           }
         }
 
+        // Only the video in the centered (active) slide may play.
+        // Every other video — visible side-slides included, and anything
+        // fully off-screen — must be paused.
+        function manageSlideVideos(swiper) {
+          if (!swiper || !swiper.slides) return;
+
+          const activeSlide = swiper.slides[swiper.activeIndex];
+          const activeVideo = activeSlide
+            ? activeSlide.querySelector("video")
+            : null;
+
+          swiper.slides.forEach((slide) => {
+            const video = slide.querySelector("video");
+            if (!video) return;
+
+            // Pause anything that is not the active slide's video,
+            // regardless of whether it's currently visible on screen.
+            if (video !== activeVideo && !video.paused) {
+              video.pause();
+            }
+          });
+
+          if (activeVideo && activeVideo.paused) {
+            activeVideo.play().catch((error) => {
+              console.log("Video play blocked or failed:", error);
+            });
+          }
+        }
+
         const roomSwiper = new Swiper(".roomSwiper", {
           direction: "horizontal",
           rtl: true,
@@ -314,10 +343,15 @@
             init: function () {
               updateSwiperCaption(this);
               updateNavVisibility(this);
+              manageSlideVideos(this);
             },
             slideChange: function () {
               updateSwiperCaption(this);
               updateNavVisibility(this);
+              manageSlideVideos(this);
+            },
+            transitionEnd: function () {
+              manageSlideVideos(this);
             },
             reachBeginning: function () {
               updateNavVisibility(this);
@@ -336,6 +370,7 @@
           roomSwiper.update();
           updateSwiperCaption(roomSwiper);
           updateNavVisibility(roomSwiper);
+          manageSlideVideos(roomSwiper);
         });
 
         if (typeof applyLanguage === "function") {

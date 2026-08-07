@@ -282,6 +282,30 @@
           }
         }
 
+        // Only play the video in the centered (active) slide; pause all others.
+        function manageSlideVideos(swiper) {
+          if (!swiper || !swiper.slides) return;
+
+          const activeSlide = swiper.slides[swiper.activeIndex];
+
+          swiper.slides.forEach((slide) => {
+            const video = slide.querySelector("video");
+            if (!video) return;
+
+            if (slide === activeSlide) {
+              if (video.paused) {
+                video.play().catch((error) => {
+                  console.log("Video play blocked or failed:", error);
+                });
+              }
+            } else {
+              if (!video.paused) {
+                video.pause();
+              }
+            }
+          });
+        }
+
         const roomSwiper = new Swiper(".roomSwiper", {
           direction: "horizontal",
           loop: false,
@@ -299,10 +323,12 @@
             init: function () {
               updateSwiperCaption(this);
               updateNavVisibility(this);
+              manageSlideVideos(this);
             },
             slideChange: function () {
               updateSwiperCaption(this);
               updateNavVisibility(this);
+              manageSlideVideos(this);
             },
             reachBeginning: function () {
               updateNavVisibility(this);
@@ -321,6 +347,7 @@
           roomSwiper.update();
           updateSwiperCaption(roomSwiper);
           updateNavVisibility(roomSwiper);
+          manageSlideVideos(roomSwiper);
         });
 
         if (typeof applyLanguage === "function") {

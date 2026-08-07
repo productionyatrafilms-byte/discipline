@@ -45,7 +45,6 @@
             <div class="slide-card">
               <div class="slide-image-box">
                 <video
-                  autoplay
                   muted
                   loop
                   playsinline
@@ -59,7 +58,6 @@
             <div class="slide-card">
               <div class="slide-image-box">
                 <video
-                  autoplay
                   muted
                   loop
                   playsinline
@@ -73,7 +71,6 @@
             <div class="slide-card">
               <div class="slide-image-box">
                 <video
-                  autoplay
                   muted
                   loop
                   playsinline
@@ -87,7 +84,6 @@
             <div class="slide-card">
               <div class="slide-image-box">
                 <video
-                  autoplay
                   muted
                   loop
                   playsinline
@@ -101,7 +97,6 @@
             <div class="slide-card">
               <div class="slide-image-box">
                 <video
-                  autoplay
                   muted
                   loop
                   playsinline
@@ -311,6 +306,35 @@
           }
         }
 
+        // Only the video in the centered (active) slide may play.
+        // Every other video — visible side-slides included, and anything
+        // fully off-screen — must be paused.
+        function manageSlideVideos(swiper) {
+          if (!swiper || !swiper.slides) return;
+
+          const activeSlide = swiper.slides[swiper.activeIndex];
+          const activeVideo = activeSlide
+            ? activeSlide.querySelector("video")
+            : null;
+
+          swiper.slides.forEach((slide) => {
+            const video = slide.querySelector("video");
+            if (!video) return;
+
+            // Pause anything that is not the active slide's video,
+            // regardless of whether it's currently visible on screen.
+            if (video !== activeVideo && !video.paused) {
+              video.pause();
+            }
+          });
+
+          if (activeVideo && activeVideo.paused) {
+            activeVideo.play().catch((error) => {
+              console.log("Video play blocked or failed:", error);
+            });
+          }
+        }
+
         const roomSwiper = new Swiper(".roomSwiper", {
           direction: "horizontal",
           loop: false,
@@ -328,10 +352,15 @@
             init: function () {
               updateSwiperCaption(this);
               updateNavVisibility(this);
+              manageSlideVideos(this);
             },
             slideChange: function () {
               updateSwiperCaption(this);
               updateNavVisibility(this);
+              manageSlideVideos(this);
+            },
+            transitionEnd: function () {
+              manageSlideVideos(this);
             },
             reachBeginning: function () {
               updateNavVisibility(this);
@@ -350,6 +379,7 @@
           roomSwiper.update();
           updateSwiperCaption(roomSwiper);
           updateNavVisibility(roomSwiper);
+          manageSlideVideos(roomSwiper);
         });
 
         if (typeof applyLanguage === "function") {
