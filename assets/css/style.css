@@ -299,8 +299,8 @@ body[data-lang="gu"] .page-title span {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 40vw;
-    height: 40vw;
+    width: 85vw;
+    height: 85vw;
     transform: translate(-50%, -50%) scale(1);
     border-radius: 50%;
     background-color: transparent;
@@ -322,7 +322,19 @@ body[data-lang="gu"] .page-title span {
       opacity 1s ease;
   }
 
+  .circle img{
+    position: absolute;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 35vw!important;
+  }
+
   .circle div[data-lang-key="title"] {
+        position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%,-50%);
     font-size: 6vw;
     text-align: center;
     color: #802922;
@@ -342,7 +354,11 @@ body[data-lang="gu"] .page-title span {
   }
 
   .circle button {
-    position: relative;
+            position: absolute;
+    top: 68%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+z-index: 99999;
     overflow: hidden;
     padding: 0.1vw 1.5vw;
     border: none;
@@ -384,12 +400,12 @@ body[data-lang="gu"] .page-title span {
   }
 
   .circle button:hover {
-    transform: scale(1.05);
+    transform: scale(1.05) translate(-50%,-50%);
     color: #FFE2A2;
   }
 
   .circle button:hover::before {
-    transform: translateX(-50%) scaleY(2);
+    transform: translate(-50%,-50%) scaleY(2);
   }
 
   .circle.expand {
