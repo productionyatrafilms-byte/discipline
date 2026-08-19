@@ -141,14 +141,21 @@
         }, 1300);
       }
 
-      startBtn?.addEventListener("click", () => {
-        if (description) {
-          description.style.display = "none";
-        }
+     const boy = document.querySelector(".boy");
 
-        playAudio(transitionAudio);
-        startIntro();
-      });
+startBtn?.addEventListener("click", () => {
+  // Hide mascot immediately
+  if (boy) {
+    boy.style.display = "none";
+  }
+
+  if (description) {
+    description.style.display = "none";
+  }
+
+  playAudio(transitionAudio);
+  startIntro();
+});
 
       englishBtn?.addEventListener("click", () => {
         playAudio(englishAudio);
