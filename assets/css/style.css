@@ -346,11 +346,14 @@ body[data-lang="gu"] .page-title span {
 
   .description{
     text-align: center;
+    position: absolute;
+    bottom: 20vw;
     color: #802922;
     font-family: "BalooRegular";
     font-size: 1.8vw;
     width: 75%;
     opacity: 1;
+    z-index: 9999;
   }
 
   .circle button {
