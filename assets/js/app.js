@@ -99,8 +99,7 @@ async function loadTranslations() {
   setActiveButton(getButtonByLanguage(savedLang));
 
   try {
-    const res = await fetch("./assets/json/data.json", { cache: "no-store" });
-    translations = await res.json();
+    translations = typeof data !== "undefined" ? data : {};
 
     applyLanguage(savedLang);
   } catch (error) {
