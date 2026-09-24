@@ -93,6 +93,11 @@ body[data-lang="hi"] .title-main {
     text-stroke: 0;
 }
 
+/* Baloo only has a 400 weight; the inherited 700 made the browser fake a heavy bold */
+body[data-lang="hi"] .description {
+    font-weight: 400;
+}
+
 /* Remove stroke for Gujarati */
 body[data-lang="gu"] .title-main{
     -webkit-text-stroke: 0!important;

@@ -32,8 +32,12 @@ window.addEventListener("resize", checkScreenSize);
 
 let translations = {};
 
+// Other apps on the same domain can write their own value to this key
+// (e.g. "en"), so only trust languages that exist in data.js.
 function getSavedLanguage() {
-  return localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
+  const saved = localStorage.getItem(LANG_KEY);
+  const known = typeof data !== "undefined" && data[saved];
+  return known ? saved : DEFAULT_LANG;
 }
 
 function getButtonByLanguage(lang) {
