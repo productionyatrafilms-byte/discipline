@@ -45,7 +45,7 @@
         <div class="swiper-slide" data-caption-key="slide-4.1">
           <div class="slide-card">
             <div class="slide-image-box">
-              <video muted loop playsinline src="./assets/videos/4-1.mp4"></video>
+              <video muted loop playsinline src="./assets/videos/4-1.mp4" preload="auto"></video>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@
         <div class="swiper-slide" data-caption-key="slide-4.2">
           <div class="slide-card">
             <div class="slide-image-box">
-              <video muted loop playsinline src="./assets/videos/4-2.mp4"></video>
+              <video muted loop playsinline src="./assets/videos/4-2.mp4" preload="none"></video>
             </div>
           </div>
         </div>
@@ -61,7 +61,7 @@
         <div class="swiper-slide" data-caption-key="slide-4.3">
           <div class="slide-card">
             <div class="slide-image-box">
-              <video muted loop playsinline src="./assets/videos/4-3.mp4"></video>
+              <video muted loop playsinline src="./assets/videos/4-3.mp4" preload="none"></video>
             </div>
           </div>
         </div>
@@ -69,7 +69,7 @@
         <div class="swiper-slide" data-caption-key="slide-4.4">
           <div class="slide-card">
             <div class="slide-image-box">
-              <video muted loop playsinline src="./assets/videos/4-4.mp4"></video>
+              <video muted loop playsinline src="./assets/videos/4-4.mp4" preload="none"></video>
             </div>
           </div>
         </div>
@@ -77,7 +77,7 @@
         <div class="swiper-slide" data-caption-key="slide-4.5">
           <div class="slide-card">
             <div class="slide-image-box">
-              <video muted loop playsinline src="./assets/videos/4-5.mp4"></video>
+              <video muted loop playsinline src="./assets/videos/4-5.mp4" preload="none"></video>
             </div>
           </div>
         </div>
@@ -110,7 +110,6 @@
   <script src="./assets/js/data.js"></script>
 <script src="./assets/js/app.js"></script>
   <script src="./assets/js/swiper-bundle.min.js"></script>
-    <script src="./assets/js/djp.js"></script>
 
   <script>
     (() => {
@@ -309,6 +308,9 @@
         swiper.slides.forEach((slide) => {
           const video = slide.querySelector("video");
           if (!video) return;
+
+          // the active slide loads fully; every other slide stays unloaded
+          video.preload = video === activeVideo ? "auto" : "none";
 
           // Pause anything that is not the active slide's video,
           // regardless of whether it's currently visible on screen.

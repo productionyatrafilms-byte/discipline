@@ -50,6 +50,7 @@
                   loop
                   playsinline
                   src="./assets/videos/2-1.mp4"
+                  preload="auto"
                 ></video>
               </div>
             </div>
@@ -59,11 +60,11 @@
             <div class="slide-card">
               <div class="slide-image-box">
                 <video
-                  autoplay
                   muted
                   loop
                   playsinline
                   src="./assets/videos/2-2.mp4"
+                  preload="none"
                 ></video>
               </div>
             </div>
@@ -73,11 +74,11 @@
             <div class="slide-card">
               <div class="slide-image-box">
                 <video
-                  autoplay
                   muted
                   loop
                   playsinline
                   src="./assets/videos/2-3.mp4"
+                  preload="none"
                 ></video>
               </div>
             </div>
@@ -104,7 +105,6 @@
     <script src="./assets/js/data.js"></script>
 <script src="./assets/js/app.js"></script>
     <script src="./assets/js/swiper-bundle.min.js"></script>
-    <script src="./assets/js/djp.js"></script>
 
     <script>
       (() => {
@@ -293,6 +293,9 @@
           swiper.slides.forEach((slide) => {
             const video = slide.querySelector("video");
             if (!video) return;
+
+            // the active slide loads fully; every other slide stays unloaded
+            video.preload = slide === activeSlide ? "auto" : "none";
 
             if (slide === activeSlide) {
               if (video.paused) {
