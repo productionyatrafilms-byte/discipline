@@ -146,7 +146,7 @@ body[data-lang="gu"] .title-main{
   }
 
   .page-title span {
-    font-size: 6vw;
+    font-size: 5vw;
     text-align: center;
     color: #802922;
     font-family: "WendyOneRegular" ;
@@ -158,6 +158,14 @@ body[data-lang="gu"] .title-main{
 body[data-lang="gu"] .page-title span {
   font-weight: bolder!important;
     -webkit-text-stroke: 0.2vw white;
+}
+
+/* Devanagari / Gujarati glyphs are taller and sit lower in the line box: smaller, tighter title so it clears the card */
+body[data-lang="hi"] .page-title span,
+body[data-lang="gu"] .page-title span {
+  font-size: 4.1vw;
+  line-height: 1;
+  margin-top: 1vw;
 }
 
 .language-container {
@@ -444,7 +452,9 @@ z-index: 99999;
     padding: 2vw 0;
     height: 100%;
     width: 100%;
-    overflow: hidden;
+    /* clip sideways only, so the caption below the card is never cut off */
+    overflow-x: clip !important;
+    overflow-y: visible !important;
   }
 
   .roomSwiper .swiper-wrapper {
@@ -452,6 +462,7 @@ z-index: 99999;
   }
 
   .roomSwiper .swiper-slide {
+    width: calc(46 * var(--u)) !important;
     height: auto;
     display: flex;
     justify-content: center;
@@ -471,15 +482,27 @@ z-index: 99999;
     transform: scale(0.86);
   }
 
+  /* slide card unit: 1vw in normal windows; taller 16:9 viewports (full screen) use the extra height,
+     same approach as the Sharing / Say What When pages */
+  :root {
+    --u: 1vw;
+  }
+
+  @media (max-aspect-ratio: 39/20) {
+    :root {
+      --u: 1.125vw;
+    }
+  }
+
   .slide-card {
-    width: 40vw !important;
+    width: calc(46 * var(--u)) !important;
     text-align: center;
     background-color: transparent !important;
   }
 
   .slide-image-box {
-    width: 40vw !important;
-    height: auto;
+    width: calc(46 * var(--u)) !important;
+    height: calc(28 * var(--u));
     border-radius: 1.5vw;
     overflow: hidden;
     border: 0.3vw solid white;
@@ -487,8 +510,8 @@ z-index: 99999;
 
   .slide-image-box video {
     width: 100%;
-    height: auto;
-    object-fit: contain;
+    height: 100%;
+    object-fit: cover;
     display: block;
 
   }
@@ -499,14 +522,17 @@ z-index: 99999;
 
   .shared-caption {
     
-    max-width: 35vw;
-    min-width: 10vw;
+    /* size to the text on one line (!important beats the width the page script sets inline,
+       which was measured before the web font loaded and wrapped the text) */
+    width: max-content !important;
+    max-width: 46vw;
+    min-width: 20vw;
     height: auto;
     margin: 0.8vw auto 0;
     background: #f6d28d;
     color: #7d2e25;
     font-size: 1.7vw;
-    padding: 1.2vw 2vw;
+    padding: 0.8vw 2vw;
     line-height: 1.1;
     border-radius: 0.5vw;
     box-shadow: 0 0.12vw 0 #d39a45;
@@ -514,7 +540,7 @@ z-index: 99999;
 
     text-align: center;
     position: absolute !important;
-    top: 81%;
+    top: calc(50% + 14.6 * var(--u) - 0.8vw);
     left: 50%;
     transform: translateX(-50%);
     box-sizing: border-box;
@@ -527,10 +553,11 @@ z-index: 99999;
 
   .custom-nav {
     position: absolute;
-    top: 50%;
+    /* wrapper has 5vw bottom padding, so its 50% sits 2.5vw below the card's centre */
+    top: calc(50% - 2.5vw);
     transform: translateY(-50%);
-    width: 4vw;
-    height: 4vw;
+    width: 3.4vw;
+    height: 3.4vw;
     z-index: 20;
     cursor: pointer;
     display: flex;
@@ -545,11 +572,11 @@ z-index: 99999;
   }
 
   .custom-prev {
-    left: 23%;
+    left: calc(50% - 24 * var(--u) - 3.4vw);
   }
 
   .custom-next {
-    right: 23%;
+    right: calc(50% - 24 * var(--u) - 3.4vw);
   }
 
 

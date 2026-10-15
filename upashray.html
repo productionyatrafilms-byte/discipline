@@ -233,12 +233,15 @@
 
         function getResponsiveSpace() {
           const swiperEl = document.querySelector(".roomSwiper");
-          if (!swiperEl) return 700;
+          if (!swiperEl) return 760;
 
           const baseDesignWidth = 1920;
           const currentWidth = swiperEl.offsetWidth;
 
-          return (700 * currentWidth) / baseDesignWidth;
+          // slides are as wide as the card; keep the gap between cards a constant fraction of the card width
+          const card = swiperEl.querySelector(".slide-card");
+          if (card && card.offsetWidth) return card.offsetWidth * 0.03;
+          return (760 * currentWidth) / baseDesignWidth;
         }
 
         function getCurrentLanguage() {
@@ -323,12 +326,17 @@
             ? activeSlide.querySelector("video")
             : null;
 
-          swiper.slides.forEach((slide) => {
+          swiper.slides.forEach((slide, slideIndex) => {
             const video = slide.querySelector("video");
             if (!video) return;
 
-            // the active slide loads fully; every other slide stays unloaded
-            video.preload = video === activeVideo ? "auto" : "none";
+            // active slide loads fully; its immediate neighbours load just the first frame
+            // (so they show a picture, not an empty box); everything else stays unloaded
+            const isNeighbour = Math.abs(slideIndex - swiper.activeIndex) === 1;
+            video.preload = video === activeVideo ? "auto" : isNeighbour ? "metadata" : "none";
+            if (isNeighbour && video.readyState === 0 && video.networkState !== 2) {
+              video.load();
+            }
 
             // Pause anything that is not the active slide's video,
             // regardless of whether it's currently visible on screen.
@@ -348,7 +356,7 @@
           direction: "horizontal",
           loop: false,
           centeredSlides: true,
-          slidesPerView: 3,
+          slidesPerView: "auto",
           slidesPerGroup: 1,
           spaceBetween: getResponsiveSpace(),
           speed: 800,
