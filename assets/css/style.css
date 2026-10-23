@@ -943,3 +943,19 @@ z-index: 99999;
     transform: scale(1);
   }
 }
+
+/* Animated "no" sign (no.gif) laid over the picture on pathshala slides 4-3 and 4-4.
+   Sized and placed as a share of the picture box so it scales with it. */
+.slide-image-box {
+  position: relative;
+}
+
+.slide-image-box .no-sign {
+  position: absolute;
+  left: 50%;
+  top: 29%;
+  width: 26%;
+  height: auto;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
